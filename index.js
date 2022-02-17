@@ -3,6 +3,7 @@ const app = express();
 const cors = require('cors');
 app.use(express.json());
 app.use(cors());
+require("dotenv").config();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server, { cors: { origin: "*" } });
 
@@ -14,7 +15,7 @@ app.use("/users", usersRouter);
 app.use("/messages", messagesRouter);
 
 db.sequelize.sync().then(() => {
-    server.listen(3001, () => {
+    server.listen(process.env.PORT || 3001, () => {
         console.log("Server runs on port 3001");
     });
 
